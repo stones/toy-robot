@@ -1,0 +1,15 @@
+{
+  "name": "toy-robot",
+  "version": "1.0.0",
+  "description": "A simple CLI to control a toy robot in a 5x5 grid using text files",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "CLI",
+    "toyrobot"
+  ],
+  "author": "Tom Stones",
+  "license": "UNLICENSED"
+}
