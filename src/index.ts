@@ -1,0 +1,1 @@
+console.log('Toy robot cli');

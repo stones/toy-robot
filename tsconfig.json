@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+
+    "baseUrl": "./src",
+      "paths": {
+    },
+    "outDir": "bin",
+    "downlevelIteration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "strictFunctionTypes": false,
+    "sourceMap": true,
+    
+    "target": "es5"
+  }
+}
