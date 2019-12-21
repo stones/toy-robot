@@ -3,3 +3,8 @@ node_modules/
 
 # Builds
 bin/
+
+
+# Test output
+.nyc_output
+coverage
