@@ -1,2 +1,2 @@
-export * from './ToyRobotCli';
+export * from './Cli';
 
