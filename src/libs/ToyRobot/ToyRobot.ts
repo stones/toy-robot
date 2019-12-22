@@ -8,8 +8,10 @@ export class ToyRobot {
 	public constructor(
 		public readonly directionService: DirectionService,
 		private readonly movementService: MovementService
-	) {
-		console.log(this.movementService);
+	) { }
+
+	public moveEast(currentPosition: number): number {
+		return this.movementService.canMoveEast(currentPosition) ? currentPosition + 1 : currentPosition;
 	}
 
 	public rotateLeft(currentDirection: Direction): Direction {
