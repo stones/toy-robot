@@ -14,6 +14,18 @@ export class ToyRobot {
 		return this.movementService.canMoveEast(currentPosition) ? currentPosition + 1 : currentPosition;
 	}
 
+	public moveNorth(currentPosition: number): number {
+		return this.movementService.canMoveNorth(currentPosition) ? currentPosition + 1 : currentPosition;
+	}
+
+	public moveSouth(currentPosition: number): number {
+		return this.movementService.canMoveSouth(currentPosition) ? currentPosition - 1 : currentPosition;
+	}
+
+	public moveWest(currentPosition: number): number {
+		return this.movementService.canMoveWest(currentPosition) ? currentPosition - 1 : currentPosition;
+	}
+
 	public rotateLeft(currentDirection: Direction): Direction {
 		return this.directionService.rotateLeft(currentDirection);
 	}
