@@ -44,7 +44,6 @@ module.exports = {
         'space-in-parens': 'error',
         '@typescript-eslint/indent': ['error', 'tab'],
         '@typescript-eslint/no-this-alias': ['error', { allowDestructuring: true }],
-        '@typescript-eslint/no-extra-parens': 'error',
         '@typescript-eslint/no-for-in-array': 'error',
         '@typescript-eslint/type-annotation-spacing': 'error',
         '@typescript-eslint/prefer-for-of': 'error',
