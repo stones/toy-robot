@@ -17,6 +17,10 @@ export class MovementService {
 		return position < Y_UPPER;
 	}
 
+	public canMoveSouth(position: number): boolean {
+		return position > Y_LOWER;
+	}
+
 	private withinXRange(value: number): boolean {
 		return (value >= X_LOWER) && (value <= X_UPPER);
 	}
