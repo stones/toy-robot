@@ -9,10 +9,6 @@ export const Y_UPPER: number = 4;
 @Service()
 export class MovementService {
 
-	public canPlaceRobot(x: number, y: number): boolean {
-		return this.withinXRange(x) && this.withinYRange(y);
-	}
-
 	public canMoveEast(position: number): boolean {
 		return position < X_UPPER;
 	}
@@ -23,6 +19,14 @@ export class MovementService {
 
 	public canMoveSouth(position: number): boolean {
 		return position > Y_LOWER;
+	}
+
+	public canMoveWest(position: number): boolean {
+		return position > X_LOWER;
+	}
+
+	public canPlaceRobot(x: number, y: number): boolean {
+		return this.withinXRange(x) && this.withinYRange(y);
 	}
 
 	private withinXRange(value: number): boolean {
