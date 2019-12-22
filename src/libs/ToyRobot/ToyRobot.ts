@@ -1,3 +1,4 @@
+import { ToyRobotState } from 'libs/Store';
 import { Service } from 'typedi';
 import { Direction, DirectionService } from './DirectionService';
 import { MovementService } from './MovementService';
@@ -24,6 +25,11 @@ export class ToyRobot {
 
 	public moveWest(currentPosition: number): number {
 		return this.movementService.canMoveWest(currentPosition) ? currentPosition - 1 : currentPosition;
+	}
+
+	public report(state: ToyRobotState): string {
+		const { x, y, direction } = state;
+		return `${x},${y},${direction}`;
 	}
 
 	public rotateLeft(currentDirection: Direction): Direction {

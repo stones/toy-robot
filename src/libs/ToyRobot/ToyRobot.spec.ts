@@ -41,6 +41,22 @@ import { ToyRobot } from './ToyRobot';
 	}
 }
 
+@suite export class ToyRobotReportTests {
+	constructor(public toyRobot: ToyRobot) { }
+
+	@test 'should return a string format for the provided state'(): void {
+		const x: number = 1;
+		const y: number = 2;
+		const direction = DIRECTIONS[2]
+		const result: string = this.toyRobot.report({ x, y, direction });
+		const expectation: string = `${x},${y},${direction}`;
+
+		expect(result).to.equal(expectation, `The report should return ${expectation}`);
+	}
+}
+
+
+
 @suite export class ToyRobotMoveSouthTests {
 	constructor(public toyRobot: ToyRobot) { }
 
