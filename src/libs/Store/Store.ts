@@ -18,4 +18,13 @@ export class Store {
 	public constructor() {
 		this.state$.subscribe((state: ToyRobotState) => this.state = state);
 	}
+
+	public setState(state: ToyRobotState): void {
+		this.state$.next(state);
+	}
+
+	public setPlacement(x: number, y: number, direction: Direction): void {
+		this.setState({ x, y, direction });
+	}
+
 }

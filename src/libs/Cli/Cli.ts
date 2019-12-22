@@ -1,7 +1,10 @@
+import { Observable } from 'rxjs';
+import { filter, skipWhile } from 'rxjs/operators';
 import { Service } from 'typedi';
+import { PLACEMENT_COMMAND_REGEX } from '../Commands';
 import { FileReader } from '../FileReader';
-import { Store, ToyRobotState } from '../Store';
-import { ToyRobot } from '../ToyRobot';
+import { Store } from '../Store';
+import { Direction, ToyRobot } from '../ToyRobot';
 @Service()
 export class ToyRobotCli {
 
@@ -12,10 +15,28 @@ export class ToyRobotCli {
 	) { }
 
 	public open(path: string): void {
-		this.fileReader.createStreamFromPath(path).subscribe((command: string) => console.log(command));
+		const commands$: Observable<string> = this.fileReader.createStreamFromPath(path)
+			.pipe(skipWhile((command: string) => !PLACEMENT_COMMAND_REGEX.test(command)));
 
-		this.store.state$.subscribe((state: ToyRobotState) => console.log(state));
-
-		console.log(this.toyRobot);
+		this.handlePlaceCommands(commands$);
 	}
+
+	private handlePlaceCommands(commands$: Observable<string>): void {
+		commands$.pipe(filter((command: string) => PLACEMENT_COMMAND_REGEX.test(command)))
+			.subscribe((command: string) => {
+
+				const { groups } = PLACEMENT_COMMAND_REGEX.exec(command) as RegExpExecArray;
+
+				if (groups) {
+					const x: number = +groups['x'];
+					const y: number = +groups['y'];
+					const direction: Direction = groups['direction'] as Direction;
+
+					if (this.toyRobot.checkPlacement(x, y)) {
+						this.store.setPlacement(x, y, direction);
+					}
+				}
+			});
+	}
+
 }
