@@ -20,3 +20,21 @@ import { Direction, DIRECTIONS, DirectionService } from './DirectionService';
 		expect(this.directionService.rotateRight(current)).to.equal(expectation, `The direction should be ${expectation}`);
 	}
 }
+
+@suite export class DirectionServiceRotateLeftTests {
+	constructor(public directionService: DirectionService) { }
+
+	@test 'Should return the next counter clockwise direction when not the first direction'(): void {
+		const current: Direction = DIRECTIONS[1];
+		const expectation: Direction = DIRECTIONS[0];
+
+		expect(this.directionService.rotateLeft(current)).to.equal(expectation, `The direction should be ${expectation}`);
+	}
+
+	@test 'Should return the last direction when the current direction is the first direction'(): void {
+		const current: Direction = DIRECTIONS[0];
+		const expectation: Direction = DIRECTIONS[DIRECTIONS.length - 1];
+
+		expect(this.directionService.rotateLeft(current)).to.equal(expectation, `The direction should be ${expectation}`);
+	}
+}
