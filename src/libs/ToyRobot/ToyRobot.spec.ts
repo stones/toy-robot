@@ -23,6 +23,7 @@ import { ToyRobot } from './ToyRobot';
 		expect(result).to.equal(expectation, `The moveEast should return ${expectation}`);
 	}
 }
+
 @suite export class ToyRobotMoveNorthTests {
 	constructor(public toyRobot: ToyRobot) { }
 
@@ -49,13 +50,11 @@ import { ToyRobot } from './ToyRobot';
 		const y: number = 2;
 		const direction = DIRECTIONS[2]
 		const result: string = this.toyRobot.report({ x, y, direction });
-		const expectation: string = `${x},${y},${direction}`;
+		const expectation: string = `x: ${x}, y: ${y}, facing: ${direction}`;
 
 		expect(result).to.equal(expectation, `The report should return ${expectation}`);
 	}
 }
-
-
 
 @suite export class ToyRobotMoveSouthTests {
 	constructor(public toyRobot: ToyRobot) { }

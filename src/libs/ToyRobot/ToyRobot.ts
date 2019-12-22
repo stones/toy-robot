@@ -29,7 +29,7 @@ export class ToyRobot {
 
 	public report(state: ToyRobotState): string {
 		const { x, y, direction } = state;
-		return `${x},${y},${direction}`;
+		return `x: ${x}, y: ${y}, facing: ${direction}`;
 	}
 
 	public rotateLeft(currentDirection: Direction): Direction {
