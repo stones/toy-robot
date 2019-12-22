@@ -6,6 +6,20 @@ import { Direction, DIRECTIONS } from './DirectionService';
 import { X_LOWER, X_UPPER, Y_LOWER, Y_UPPER } from './MovementService';
 import { ToyRobot } from './ToyRobot';
 
+@suite export class ToyRobotCheckPlacement {
+	constructor(public toyRobot: ToyRobot) { }
+
+	@test 'should call the CheckPlacement command on the direction service'(): void {
+		const spy = sinon.spy(this.toyRobot.movementService, 'canPlaceRobot');
+
+		this.toyRobot.checkPlacement(X_LOWER, Y_UPPER);
+
+		expect(spy.calledWith(X_LOWER, Y_UPPER)).to.equal(true, `The rotateLeft function should be caled with ${X_LOWER} and ${Y_UPPER}`);
+
+		spy.restore();
+	}
+}
+
 @suite export class ToyRobotMoveEastTests {
 	constructor(public toyRobot: ToyRobot) { }
 
@@ -104,7 +118,12 @@ import { ToyRobot } from './ToyRobot';
 		this.toyRobot.rotateLeft(current);
 
 		expect(spy.calledWith(current)).to.equal(true, `The rotateLeft function should be caled with ${current}`);
+
+		spy.restore()
 	}
+}
+@suite export class ToyRobotRotateRightTests {
+	constructor(public toyRobot: ToyRobot) { }
 
 	@test 'should call the rotateRight command on the direction service'(): void {
 		const current: Direction = DIRECTIONS[2];
@@ -113,5 +132,7 @@ import { ToyRobot } from './ToyRobot';
 		this.toyRobot.rotateRight(current);
 
 		expect(spy.calledWith(current)).to.equal(true, `The rotateRight function should be caled with ${current}`);
+
+		spy.restore()
 	}
 }

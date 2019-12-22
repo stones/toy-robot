@@ -8,8 +8,12 @@ export class ToyRobot {
 
 	public constructor(
 		public readonly directionService: DirectionService,
-		private readonly movementService: MovementService
+		public readonly movementService: MovementService
 	) { }
+
+	public checkPlacement(x: number, y: number): boolean {
+		return this.movementService.canPlaceRobot(x, y);
+	}
 
 	public moveEast(currentPosition: number): number {
 		return this.movementService.canMoveEast(currentPosition) ? currentPosition + 1 : currentPosition;
