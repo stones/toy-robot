@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs';
-import { filter, skipWhile } from 'rxjs/operators';
+import { filter, map, skipWhile, withLatestFrom } from 'rxjs/operators';
 import { Service } from 'typedi';
-import { PLACEMENT_COMMAND_REGEX } from '../Commands';
+import { PLACEMENT_COMMAND_REGEX, REPORT_COMMAND_REGEX } from '../Commands';
 import { FileReader } from '../FileReader';
-import { Store } from '../Store';
+import { Store, ToyRobotState } from '../Store';
 import { Direction, ToyRobot } from '../ToyRobot';
 @Service()
 export class ToyRobotCli {
@@ -19,6 +19,7 @@ export class ToyRobotCli {
 			.pipe(skipWhile((command: string) => !PLACEMENT_COMMAND_REGEX.test(command)));
 
 		this.handlePlaceCommands(commands$);
+		this.handleReportCommands(commands$);
 	}
 
 	private handlePlaceCommands(commands$: Observable<string>): void {
@@ -39,4 +40,10 @@ export class ToyRobotCli {
 			});
 	}
 
+	private handleReportCommands(commands$: Observable<string>): void {
+		commands$.pipe(filter((command: string) => REPORT_COMMAND_REGEX.test(command)),
+			withLatestFrom(this.store.state$),
+			map(([_command, state]: [string, ToyRobotState]) => state)
+		).subscribe((state: ToyRobotState) => console.log(this.toyRobot.report(state)));
+	}
 }
