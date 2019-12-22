@@ -1,17 +1,17 @@
 import { Observable } from 'rxjs';
 import { filter, map, skipWhile, withLatestFrom } from 'rxjs/operators';
 import { Service } from 'typedi';
-import { PLACEMENT_COMMAND_REGEX, REPORT_COMMAND_REGEX } from '../Commands';
+import { LEFT_COMMAND_REGEX, MOVE_COMMAND_REGEX, PLACEMENT_COMMAND_REGEX, REPORT_COMMAND_REGEX, RIGHT_COMMAND_REGEX } from '../Commands';
 import { FileReader } from '../FileReader';
 import { Store, ToyRobotState } from '../Store';
-import { Direction, ToyRobot } from '../ToyRobot';
+import { Direction, DIRECTIONS, ToyRobot } from '../ToyRobot';
 @Service()
 export class ToyRobotCli {
 
 	public constructor(
-		private readonly fileReader: FileReader,
-		private readonly store: Store,
-		private readonly toyRobot: ToyRobot
+		public readonly fileReader: FileReader,
+		public readonly store: Store,
+		public readonly toyRobot: ToyRobot
 	) { }
 
 	public open(path: string): void {
@@ -19,7 +19,30 @@ export class ToyRobotCli {
 			.pipe(skipWhile((command: string) => !PLACEMENT_COMMAND_REGEX.test(command)));
 
 		this.handlePlaceCommands(commands$);
+		this.handleMoveCommands(commands$);
 		this.handleReportCommands(commands$);
+		this.handleRightCommands(commands$);
+		this.handleLeftCommands(commands$);
+	}
+
+	private handleMoveCommands(commands$: Observable<string>): void {
+		const moveCommands$: Observable<ToyRobotState> = commands$.pipe(
+			filter((command: string) => MOVE_COMMAND_REGEX.test(command)),
+			withLatestFrom(this.store.state$),
+			map(([_command, state]: [string, ToyRobotState]): ToyRobotState => state)
+		);
+
+		moveCommands$.pipe(filter((state: ToyRobotState) => state.direction === DIRECTIONS[0]))
+			.subscribe((state) => this.store.setYposition(this.toyRobot.moveNorth(state.y)));
+
+		moveCommands$.pipe(filter((state: ToyRobotState) => state.direction === DIRECTIONS[1]))
+			.subscribe((state) => this.store.setXposition(this.toyRobot.moveEast(state.y)));
+
+		moveCommands$.pipe(filter((state: ToyRobotState) => state.direction === DIRECTIONS[2]))
+			.subscribe((state) => this.store.setYposition(this.toyRobot.moveSouth(state.y)));
+
+		moveCommands$.pipe(filter((state: ToyRobotState) => state.direction === DIRECTIONS[3]))
+			.subscribe((state) => this.store.setXposition(this.toyRobot.moveWest(state.y)));
 	}
 
 	private handlePlaceCommands(commands$: Observable<string>): void {
@@ -45,5 +68,27 @@ export class ToyRobotCli {
 			withLatestFrom(this.store.state$),
 			map(([_command, state]: [string, ToyRobotState]) => state)
 		).subscribe((state: ToyRobotState) => console.log(this.toyRobot.report(state)));
+	}
+
+	private handleLeftCommands(commands$: Observable<string>): void {
+		commands$.pipe(
+			filter((command: string) => LEFT_COMMAND_REGEX.test(command)),
+			withLatestFrom(this.store.state$),
+			map(([_command, state]: [string, ToyRobotState]): Direction => state.direction)
+		).subscribe((currentDirection: Direction) => {
+			const direction: Direction = this.toyRobot.rotateLeft(currentDirection);
+			this.store.setDirection(direction);
+		});
+	}
+
+	private handleRightCommands(commands$: Observable<string>): void {
+		commands$.pipe(
+			filter((command: string) => RIGHT_COMMAND_REGEX.test(command)),
+			withLatestFrom(this.store.state$),
+			map(([_command, state]: [string, ToyRobotState]): Direction => state.direction)
+		).subscribe((currentDirection: Direction) => {
+			const direction: Direction = this.toyRobot.rotateRight(currentDirection);
+			this.store.setDirection(direction);
+		});
 	}
 }

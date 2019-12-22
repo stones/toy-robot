@@ -19,6 +19,12 @@ export class Store {
 		this.state$.subscribe((state: ToyRobotState) => this.state = state);
 	}
 
+	public setDirection(direction: Direction): void {
+		const { state } = this;
+
+		this.setState({ x: state.x, y: state.y, direction });
+	}
+
 	public setState(state: ToyRobotState): void {
 		this.state$.next(state);
 	}
@@ -27,4 +33,15 @@ export class Store {
 		this.setState({ x, y, direction });
 	}
 
+	public setXposition(x: number): void {
+		const { state } = this;
+
+		this.setState({ x, y: state.y, direction: state.direction });
+	}
+
+	public setYposition(y: number): void {
+		const { state } = this;
+
+		this.setState({ x: state.x, y, direction: state.direction });
+	}
 }
