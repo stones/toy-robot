@@ -13,6 +13,10 @@ export class MovementService {
 		return this.withinXRange(x) && this.withinYRange(y);
 	}
 
+	public canMoveEast(position: number): boolean {
+		return position < X_UPPER;
+	}
+
 	public canMoveNorth(position: number): boolean {
 		return position < Y_UPPER;
 	}

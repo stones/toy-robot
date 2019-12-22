@@ -72,6 +72,28 @@ import { MovementService, X_LOWER, X_UPPER, Y_LOWER, Y_UPPER } from './MovementS
 
 }
 
+@suite export class MovementServiceCanMoveEastTests {
+	constructor(public service: MovementService) { }
+
+	@test 'Should allow movement east when the robot is below the upper bounds'(): void {
+		const x: number = X_UPPER - 1;
+
+		expect(this.service.canMoveEast(x)).to.be.equals(true, 'Value must be true');
+	}
+
+	@test 'Should not allow movement east when the robot is at the upper bounds'(): void {
+		const x: number = X_UPPER;
+
+		expect(this.service.canMoveEast(x)).to.be.equals(false, 'Value must be false');
+	}
+
+	@test 'Should not allow movement north when the robot is above the upper bounds'(): void {
+		const x: number = X_UPPER + 1;
+
+		expect(this.service.canMoveEast(x)).to.be.equals(false, 'Value must be false');
+	}
+}
+
 
 @suite export class MovementServiceCanMoveNorthTests {
 	constructor(public service: MovementService) { }
