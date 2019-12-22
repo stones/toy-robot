@@ -1,14 +1,22 @@
 import { Service } from 'typedi';
-import { DirectionService } from './DirectionService';
+import { Direction, DirectionService } from './DirectionService';
 import { MovementService } from './MovementService';
 
 @Service()
 export class ToyRobot {
 
 	public constructor(
-		private readonly directionService: DirectionService,
+		public readonly directionService: DirectionService,
 		private readonly movementService: MovementService
 	) {
-		console.log(this.directionService, this.movementService);
+		console.log(this.movementService);
+	}
+
+	public rotateLeft(currentDirection: Direction): Direction {
+		return this.directionService.rotateLeft(currentDirection);
+	}
+
+	public rotateRight(currentDirection: Direction): Direction {
+		return this.directionService.rotateRight(currentDirection);
 	}
 }
