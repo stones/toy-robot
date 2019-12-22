@@ -1,9 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 import { Service } from 'typedi';
-
-export const DIRECTIONS = ['NORTH', 'EAST', 'SOUTH', 'WEST'] as const;
-
-export type Direction = typeof DIRECTIONS[number];
+import { Direction, DIRECTIONS } from '../ToyRobot';
 
 export interface ToyRobotState {
 	x: number;
