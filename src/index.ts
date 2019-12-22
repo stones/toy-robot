@@ -1,4 +1,5 @@
-import { ToyRobotCli } from './libs/ToyRobotCli';
+import { ToyRobotCli } from './libs/Cli';
+
 const path: string = process.argv[2];
 
 if (path) {
