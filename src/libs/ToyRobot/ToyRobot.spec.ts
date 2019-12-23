@@ -64,7 +64,7 @@ import { ToyRobot } from './ToyRobot';
 		const y: number = 2;
 		const direction = DIRECTIONS[2]
 		const result: string = this.toyRobot.report({ x, y, direction });
-		const expectation: string = `x: ${x}, y: ${y}, facing: ${direction}`;
+		const expectation: string = `${x},${y},${direction}`;
 
 		expect(result).to.equal(expectation, `The report should return ${expectation}`);
 	}
