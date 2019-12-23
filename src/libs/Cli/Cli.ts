@@ -32,17 +32,21 @@ export class ToyRobotCli {
 			map(([_command, state]: [string, ToyRobotState]): ToyRobotState => state)
 		);
 
+		// Move North
 		moveCommands$.pipe(filter((state: ToyRobotState) => state.direction === DIRECTIONS[0]))
 			.subscribe((state) => this.store.setYposition(this.toyRobot.moveNorth(state.y)));
 
+		// Move East
 		moveCommands$.pipe(filter((state: ToyRobotState) => state.direction === DIRECTIONS[1]))
-			.subscribe((state) => this.store.setXposition(this.toyRobot.moveEast(state.y)));
+			.subscribe((state) => this.store.setXposition(this.toyRobot.moveEast(state.x)));
 
+		// Move South
 		moveCommands$.pipe(filter((state: ToyRobotState) => state.direction === DIRECTIONS[2]))
 			.subscribe((state) => this.store.setYposition(this.toyRobot.moveSouth(state.y)));
 
+		// Move West
 		moveCommands$.pipe(filter((state: ToyRobotState) => state.direction === DIRECTIONS[3]))
-			.subscribe((state) => this.store.setXposition(this.toyRobot.moveWest(state.y)));
+			.subscribe((state) => this.store.setXposition(this.toyRobot.moveWest(state.x)));
 	}
 
 	private handlePlaceCommands(commands$: Observable<string>): void {
